@@ -1,13 +1,13 @@
+import { ArrowLeft, Plus, Trash2 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { toast } from "sonner";
+import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
-import { Badge } from "./ui/badge";
-import { ArrowLeft, Plus, Trash2, Check, X } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
-import { toast } from "sonner@2.0.3";
 
 interface Word {
   id: string;
@@ -34,7 +34,14 @@ interface DeckViewProps {
   nativeLanguage: string;
 }
 
-export function DeckView({ deck, words, onBack, onAddWord, onRemoveWord, nativeLanguage }: DeckViewProps) {
+export function DeckView({
+  deck,
+  words,
+  onBack,
+  onAddWord,
+  onRemoveWord,
+  nativeLanguage,
+}: DeckViewProps) {
   const [word, setWord] = useState("");
   const [translation, setTranslation] = useState("");
   const [note, setNote] = useState("");
@@ -58,7 +65,7 @@ export function DeckView({ deck, words, onBack, onAddWord, onRemoveWord, nativeL
 
     onAddWord(newWord);
     toast.success(`"${word}" added to ${deck.name}`);
-    
+
     // Reset form
     setWord("");
     setTranslation("");
@@ -83,14 +90,14 @@ export function DeckView({ deck, words, onBack, onAddWord, onRemoveWord, nativeL
             Back to Dashboard
           </Button>
           <div className="flex items-center gap-3">
-            <div 
-              className="w-3 h-3 rounded-full" 
+            <div
+              className="w-3 h-3 rounded-full"
               style={{ backgroundColor: deck.color }}
             />
             <h1>{deck.name}</h1>
           </div>
           <p className="text-muted-foreground mt-2">
-            {words.length} word{words.length !== 1 ? 's' : ''} in this deck
+            {words.length} word{words.length !== 1 ? "s" : ""} in this deck
           </p>
         </div>
       </div>
@@ -104,7 +111,9 @@ export function DeckView({ deck, words, onBack, onAddWord, onRemoveWord, nativeL
               {/* Word and Translation */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="word" className="text-sm">English Word</Label>
+                  <Label htmlFor="word" className="text-sm">
+                    English Word
+                  </Label>
                   <Input
                     id="word"
                     placeholder="e.g., adventure"
@@ -115,7 +124,9 @@ export function DeckView({ deck, words, onBack, onAddWord, onRemoveWord, nativeL
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="translation" className="text-sm">Translation</Label>
+                  <Label htmlFor="translation" className="text-sm">
+                    Translation
+                  </Label>
                   <Input
                     id="translation"
                     placeholder={`in ${nativeLanguage}`}
@@ -137,7 +148,9 @@ export function DeckView({ deck, words, onBack, onAddWord, onRemoveWord, nativeL
                     className="space-y-2"
                   >
                     <div className="flex items-center justify-between">
-                      <Label htmlFor="note" className="text-sm">Personal Note (Optional)</Label>
+                      <Label htmlFor="note" className="text-sm">
+                        Personal Note (Optional)
+                      </Label>
                       <Button
                         type="button"
                         variant="ghost"
@@ -173,7 +186,7 @@ export function DeckView({ deck, words, onBack, onAddWord, onRemoveWord, nativeL
                 )}
               </AnimatePresence>
 
-              <Button 
+              <Button
                 onClick={handleAddWord}
                 className="w-full bg-primary hover:bg-primary/90"
                 size="lg"
@@ -181,9 +194,13 @@ export function DeckView({ deck, words, onBack, onAddWord, onRemoveWord, nativeL
                 <Plus className="w-4 h-4 mr-2" />
                 Add Word
               </Button>
-              
+
               <p className="text-xs text-center text-muted-foreground">
-                Press <kbd className="px-1.5 py-0.5 bg-card border rounded text-xs">Enter</kbd> to quickly add words
+                Press{" "}
+                <kbd className="px-1.5 py-0.5 bg-card border rounded text-xs">
+                  Enter
+                </kbd>{" "}
+                to quickly add words
               </p>
             </div>
           </div>

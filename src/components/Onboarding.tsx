@@ -1,12 +1,18 @@
-import { useState, useEffect } from "react";
+import { BookOpen, Sparkles } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Label } from "./ui/label";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { Badge } from "./ui/badge";
-import { BookOpen, Sparkles } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 interface OnboardingData {
   englishLevel: string;
@@ -59,7 +65,10 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
-  const updateData = (field: keyof OnboardingData, value: string | string[]) => {
+  const updateData = (
+    field: keyof OnboardingData,
+    value: string | string[],
+  ) => {
     setData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -105,13 +114,13 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       <div className="w-full max-w-3xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <motion.div 
+          <motion.div
             className="flex justify-center mb-6"
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", duration: 0.8 }}
           >
-            <motion.div 
+            <motion.div
               className="bg-gradient-to-br from-primary to-emerald-600 rounded-2xl p-4 shadow-xl relative"
               animate={{ rotate: [0, 5, -5, 0] }}
               transition={{ duration: 4, repeat: Infinity, repeatDelay: 2 }}
@@ -126,7 +135,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
               </motion.div>
             </motion.div>
           </motion.div>
-          <motion.h1 
+          <motion.h1
             className="mb-2 bg-gradient-to-r from-primary to-emerald-600 bg-clip-text text-transparent"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -134,7 +143,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
           >
             Welcome to StoryLearn! 🎉
           </motion.h1>
-          <motion.p 
+          <motion.p
             className="text-muted-foreground text-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -142,9 +151,9 @@ export function Onboarding({ onComplete }: OnboardingProps) {
           >
             Let's personalize your learning journey
           </motion.p>
-          
+
           {/* Progress Steps */}
-          <motion.div 
+          <motion.div
             className="flex gap-3 justify-center mt-8"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -155,11 +164,12 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                 <motion.div
                   className={`
                     flex items-center justify-center w-10 h-10 rounded-full transition-all
-                    ${i < step 
-                      ? "bg-gradient-to-br from-green-600 to-emerald-600 text-white shadow-md" 
-                      : i === step 
-                      ? "bg-gradient-to-br from-primary to-emerald-600 text-white ring-4 ring-primary/20 shadow-lg" 
-                      : "bg-muted text-muted-foreground"
+                    ${
+                      i < step
+                        ? "bg-gradient-to-br from-green-600 to-emerald-600 text-white shadow-md"
+                        : i === step
+                          ? "bg-gradient-to-br from-primary to-emerald-600 text-white ring-4 ring-primary/20 shadow-lg"
+                          : "bg-muted text-muted-foreground"
                     }
                   `}
                   animate={i === step ? { scale: [1, 1.1, 1] } : {}}
@@ -168,9 +178,11 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                   {i < step ? <Sparkles className="w-5 h-5" /> : i}
                 </motion.div>
                 {i < 4 && (
-                  <motion.div 
+                  <motion.div
                     className={`w-12 h-1 rounded-full transition-all ${
-                      i < step ? "bg-gradient-to-r from-primary to-emerald-600" : "bg-border"
+                      i < step
+                        ? "bg-gradient-to-r from-primary to-emerald-600"
+                        : "bg-border"
                     }`}
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: i < step ? 1 : 0 }}
@@ -195,64 +207,86 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                 >
                   <div>
                     <h2 className="mb-2">What's your current English level?</h2>
-                    <p className="text-muted-foreground">This helps us create stories that match your ability</p>
+                    <p className="text-muted-foreground">
+                      This helps us create stories that match your ability
+                    </p>
                   </div>
                   <RadioGroup
                     value={data.englishLevel}
-                    onValueChange={(value) => updateData("englishLevel", value)}
+                    onValueChange={(value: string) =>
+                      updateData("englishLevel", value)
+                    }
                     className="space-y-3"
                   >
-                    <motion.div 
+                    <motion.div
                       whileHover={{ scale: 1.02 }}
                       className={`
                         flex items-center space-x-4 border-2 rounded-xl p-5 cursor-pointer transition-all
-                        ${data.englishLevel === "beginner" 
-                          ? "border-primary bg-primary/10 shadow-sm" 
-                          : "border-border hover:border-primary/50 bg-card"
+                        ${
+                          data.englishLevel === "beginner"
+                            ? "border-primary bg-primary/10 shadow-sm"
+                            : "border-border hover:border-primary/50 bg-card"
                         }
                       `}
                     >
                       <RadioGroupItem value="beginner" id="beginner" />
-                      <Label htmlFor="beginner" className="cursor-pointer flex-1">
+                      <Label
+                        htmlFor="beginner"
+                        className="cursor-pointer flex-1"
+                      >
                         <div>
                           <div className="mb-1">Beginner (A1-A2)</div>
-                          <p className="text-muted-foreground text-sm">Just starting to learn English</p>
+                          <p className="text-muted-foreground text-sm">
+                            Just starting to learn English
+                          </p>
                         </div>
                       </Label>
                     </motion.div>
-                    <motion.div 
+                    <motion.div
                       whileHover={{ scale: 1.02 }}
                       className={`
                         flex items-center space-x-4 border-2 rounded-xl p-5 cursor-pointer transition-all
-                        ${data.englishLevel === "intermediate" 
-                          ? "border-primary bg-primary/10 shadow-sm" 
-                          : "border-border hover:border-primary/50 bg-card"
+                        ${
+                          data.englishLevel === "intermediate"
+                            ? "border-primary bg-primary/10 shadow-sm"
+                            : "border-border hover:border-primary/50 bg-card"
                         }
                       `}
                     >
                       <RadioGroupItem value="intermediate" id="intermediate" />
-                      <Label htmlFor="intermediate" className="cursor-pointer flex-1">
+                      <Label
+                        htmlFor="intermediate"
+                        className="cursor-pointer flex-1"
+                      >
                         <div>
                           <div className="mb-1">Intermediate (B1-B2)</div>
-                          <p className="text-muted-foreground text-sm">Can understand and use everyday English</p>
+                          <p className="text-muted-foreground text-sm">
+                            Can understand and use everyday English
+                          </p>
                         </div>
                       </Label>
                     </motion.div>
-                    <motion.div 
+                    <motion.div
                       whileHover={{ scale: 1.02 }}
                       className={`
                         flex items-center space-x-4 border-2 rounded-xl p-5 cursor-pointer transition-all
-                        ${data.englishLevel === "advanced" 
-                          ? "border-primary bg-primary/10 shadow-sm" 
-                          : "border-border hover:border-primary/50 bg-card"
+                        ${
+                          data.englishLevel === "advanced"
+                            ? "border-primary bg-primary/10 shadow-sm"
+                            : "border-border hover:border-primary/50 bg-card"
                         }
                       `}
                     >
                       <RadioGroupItem value="advanced" id="advanced" />
-                      <Label htmlFor="advanced" className="cursor-pointer flex-1">
+                      <Label
+                        htmlFor="advanced"
+                        className="cursor-pointer flex-1"
+                      >
                         <div>
                           <div className="mb-1">Advanced (C1-C2)</div>
-                          <p className="text-muted-foreground text-sm">Proficient with complex topics</p>
+                          <p className="text-muted-foreground text-sm">
+                            Proficient with complex topics
+                          </p>
                         </div>
                       </Label>
                     </motion.div>
@@ -270,18 +304,24 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                 >
                   <div>
                     <h2 className="mb-2">What's your native language?</h2>
-                    <p className="text-muted-foreground">We'll use this for translations and context</p>
+                    <p className="text-muted-foreground">
+                      We'll use this for translations and context
+                    </p>
                   </div>
                   <Select
                     value={data.nativeLanguage}
-                    onValueChange={(value) => updateData("nativeLanguage", value)}
+                    onValueChange={(value: string) =>
+                      updateData("nativeLanguage", value)
+                    }
                   >
                     <SelectTrigger className="h-14 text-base border-2">
                       <SelectValue placeholder="Select your native language" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="spanish">🇪🇸 Spanish</SelectItem>
-                      <SelectItem value="chinese">🇨🇳 Chinese (Mandarin)</SelectItem>
+                      <SelectItem value="chinese">
+                        🇨🇳 Chinese (Mandarin)
+                      </SelectItem>
                       <SelectItem value="hindi">🇮🇳 Hindi</SelectItem>
                       <SelectItem value="arabic">🇸🇦 Arabic</SelectItem>
                       <SelectItem value="portuguese">🇵🇹 Portuguese</SelectItem>
@@ -310,20 +350,23 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                 >
                   <div>
                     <h2 className="mb-2">What's your age group?</h2>
-                    <p className="text-muted-foreground">This helps us create age-appropriate content</p>
+                    <p className="text-muted-foreground">
+                      This helps us create age-appropriate content
+                    </p>
                   </div>
                   <RadioGroup
                     value={data.age}
-                    onValueChange={(value) => updateData("age", value)}
+                    onValueChange={(value: string) => updateData("age", value)}
                     className="space-y-3"
                   >
-                    <motion.div 
+                    <motion.div
                       whileHover={{ scale: 1.02 }}
                       className={`
                         flex items-center space-x-4 border-2 rounded-xl p-5 cursor-pointer transition-all
-                        ${data.age === "child" 
-                          ? "border-primary bg-primary/10 shadow-sm" 
-                          : "border-border hover:border-primary/50 bg-card"
+                        ${
+                          data.age === "child"
+                            ? "border-primary bg-primary/10 shadow-sm"
+                            : "border-border hover:border-primary/50 bg-card"
                         }
                       `}
                     >
@@ -332,13 +375,14 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                         <div>Child (6-12 years)</div>
                       </Label>
                     </motion.div>
-                    <motion.div 
+                    <motion.div
                       whileHover={{ scale: 1.02 }}
                       className={`
                         flex items-center space-x-4 border-2 rounded-xl p-5 cursor-pointer transition-all
-                        ${data.age === "teen" 
-                          ? "border-primary bg-primary/10 shadow-sm" 
-                          : "border-border hover:border-primary/50 bg-card"
+                        ${
+                          data.age === "teen"
+                            ? "border-primary bg-primary/10 shadow-sm"
+                            : "border-border hover:border-primary/50 bg-card"
                         }
                       `}
                     >
@@ -347,13 +391,14 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                         <div>Teen (13-17 years)</div>
                       </Label>
                     </motion.div>
-                    <motion.div 
+                    <motion.div
                       whileHover={{ scale: 1.02 }}
                       className={`
                         flex items-center space-x-4 border-2 rounded-xl p-5 cursor-pointer transition-all
-                        ${data.age === "adult" 
-                          ? "border-primary bg-primary/10 shadow-sm" 
-                          : "border-border hover:border-primary/50 bg-card"
+                        ${
+                          data.age === "adult"
+                            ? "border-primary bg-primary/10 shadow-sm"
+                            : "border-border hover:border-primary/50 bg-card"
                         }
                       `}
                     >
@@ -375,8 +420,12 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                   className="space-y-6"
                 >
                   <div>
-                    <h2 className="mb-2">What types of stories do you enjoy?</h2>
-                    <p className="text-muted-foreground">Select at least one genre (you can choose multiple)</p>
+                    <h2 className="mb-2">
+                      What types of stories do you enjoy?
+                    </h2>
+                    <p className="text-muted-foreground">
+                      Select at least one genre (you can choose multiple)
+                    </p>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     {GENRE_OPTIONS.map((genre, idx) => (
@@ -391,9 +440,10 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                         onClick={() => toggleGenre(genre.id)}
                         className={`
                           flex items-center gap-3 p-4 rounded-xl border-2 transition-all relative overflow-hidden
-                          ${data.genres.includes(genre.id)
-                            ? "border-primary bg-gradient-to-br from-primary/15 to-emerald-50/50 shadow-md"
-                            : "border-border bg-card hover:border-primary/50 hover:shadow-sm"
+                          ${
+                            data.genres.includes(genre.id)
+                              ? "border-primary bg-gradient-to-br from-primary/15 to-emerald-50/50 shadow-md"
+                              : "border-border bg-card hover:border-primary/50 hover:shadow-sm"
                           }
                         `}
                       >
@@ -415,16 +465,23 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                     ))}
                   </div>
                   {data.genres.length > 0 && (
-                    <motion.div 
+                    <motion.div
                       className="flex flex-wrap gap-2"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                     >
-                      <span className="text-sm text-muted-foreground">Selected:</span>
+                      <span className="text-sm text-muted-foreground">
+                        Selected:
+                      </span>
                       {data.genres.map((genreId) => {
-                        const genre = GENRE_OPTIONS.find(g => g.id === genreId);
+                        const genre = GENRE_OPTIONS.find(
+                          (g) => g.id === genreId,
+                        );
                         return (
-                          <Badge key={genreId} className="bg-gradient-to-r from-primary to-emerald-600 text-white border-0">
+                          <Badge
+                            key={genreId}
+                            className="bg-gradient-to-r from-primary to-emerald-600 text-white border-0"
+                          >
                             {genre?.icon} {genre?.label}
                           </Badge>
                         );
@@ -446,18 +503,26 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                   Back
                 </Button>
               )}
-              <motion.div className={`flex-1 ${step === 1 ? 'w-full' : ''}`} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <motion.div
+                className={`flex-1 ${step === 1 ? "w-full" : ""}`}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
                 <Button
                   onClick={handleNext}
                   disabled={!canProceed()}
-                  className={`w-full bg-gradient-to-r from-primary to-emerald-600 hover:from-primary/90 hover:to-emerald-600/90 shadow-lg relative overflow-hidden ${step === 1 ? 'w-full' : ''}`}
+                  className={`w-full bg-gradient-to-r from-primary to-emerald-600 hover:from-primary/90 hover:to-emerald-600/90 shadow-lg relative overflow-hidden ${step === 1 ? "w-full" : ""}`}
                   size="lg"
                 >
                   {/* Button shine effect */}
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                    animate={{ x: ['-200%', '200%'] }}
-                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+                    animate={{ x: ["-200%", "200%"] }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      repeatDelay: 1,
+                    }}
                   />
                   <span className="relative flex items-center gap-2">
                     {step === 4 ? (

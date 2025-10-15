@@ -1,22 +1,21 @@
+import {
+  ArrowLeft,
+  BookOpen,
+  Plus,
+  Sparkles,
+  Target,
+  Trash2,
+} from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
+import { toast } from "sonner";
+import { Word } from "../interface";
+import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
-import { Badge } from "./ui/badge";
-import { Plus, Trash2, ArrowLeft, BookOpen, Sparkles, Target } from "lucide-react";
-import { toast } from "sonner@2.0.3";
-import { motion, AnimatePresence } from "motion/react";
-
-interface Word {
-  id: string;
-  text: string;
-  translation: string;
-  note: string;
-  nextReviewDate: string;
-  isVocabulary: boolean;
-}
 
 interface VocabularyManagerProps {
   words: Word[];
@@ -26,7 +25,13 @@ interface VocabularyManagerProps {
   nativeLanguage: string;
 }
 
-export function VocabularyManager({ words, onBack, onAddWord, onRemoveWord, nativeLanguage }: VocabularyManagerProps) {
+export function VocabularyManager({
+  words,
+  onBack,
+  onAddWord,
+  onRemoveWord,
+  nativeLanguage,
+}: VocabularyManagerProps) {
   const [word, setWord] = useState("");
   const [note, setNote] = useState("");
   const [showNote, setShowNote] = useState(false);
@@ -48,7 +53,7 @@ export function VocabularyManager({ words, onBack, onAddWord, onRemoveWord, nati
 
     onAddWord(newWord);
     toast.success(`"${word}" added to vocabulary`);
-    
+
     // Reset form
     setWord("");
     setNote("");
@@ -73,7 +78,7 @@ export function VocabularyManager({ words, onBack, onAddWord, onRemoveWord, nati
           </Button>
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <motion.div 
+              <motion.div
                 className="bg-gradient-to-br from-primary to-emerald-600 rounded-xl p-2.5 shadow-md"
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
@@ -90,7 +95,7 @@ export function VocabularyManager({ words, onBack, onAddWord, onRemoveWord, nati
             {words.length > 0 && (
               <Badge className="bg-gradient-to-r from-primary to-emerald-600 text-white border-0 shadow-sm px-3 py-1.5">
                 <Target className="w-3 h-3 mr-1.5" />
-                {words.length} {words.length === 1 ? 'word' : 'words'}
+                {words.length} {words.length === 1 ? "word" : "words"}
               </Badge>
             )}
           </div>
@@ -108,7 +113,7 @@ export function VocabularyManager({ words, onBack, onAddWord, onRemoveWord, nati
           >
             <Sparkles className="w-4 h-4 text-primary/20" />
           </motion.div>
-          
+
           <div className="p-5">
             <div className="flex items-center gap-2 mb-4">
               <div className="bg-gradient-to-br from-primary to-emerald-600 rounded-lg p-1.5 shadow-sm">
@@ -116,11 +121,13 @@ export function VocabularyManager({ words, onBack, onAddWord, onRemoveWord, nati
               </div>
               <h4 className="mb-0">Add New Word</h4>
             </div>
-            
+
             <div className="space-y-2.5">
               {/* Word Input */}
               <div>
-                <Label htmlFor="word" className="text-sm">English Word *</Label>
+                <Label htmlFor="word" className="text-sm">
+                  English Word *
+                </Label>
                 <Input
                   id="word"
                   placeholder="e.g., adventure"
@@ -140,7 +147,9 @@ export function VocabularyManager({ words, onBack, onAddWord, onRemoveWord, nati
                     exit={{ opacity: 0, height: 0 }}
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <Label htmlFor="note" className="text-sm">Personal Note (Optional)</Label>
+                      <Label htmlFor="note" className="text-sm">
+                        Personal Note (Optional)
+                      </Label>
                       <Button
                         type="button"
                         variant="ghost"
@@ -177,9 +186,12 @@ export function VocabularyManager({ words, onBack, onAddWord, onRemoveWord, nati
               </AnimatePresence>
 
               {/* Add Button */}
-              <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
-                <Button 
-                  onClick={handleAddWord} 
+              <motion.div
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+              >
+                <Button
+                  onClick={handleAddWord}
                   className="w-full bg-gradient-to-r from-primary to-emerald-600 hover:from-primary/90 hover:to-emerald-600/90 h-10 shadow-sm"
                 >
                   <Plus className="w-4 h-4 mr-2" />
@@ -188,7 +200,11 @@ export function VocabularyManager({ words, onBack, onAddWord, onRemoveWord, nati
               </motion.div>
 
               <p className="text-xs text-center text-muted-foreground pt-0.5">
-                💡 Press <kbd className="px-1 py-0.5 bg-muted border rounded text-xs">Enter</kbd> to quickly add words
+                💡 Press{" "}
+                <kbd className="px-1 py-0.5 bg-muted border rounded text-xs">
+                  Enter
+                </kbd>{" "}
+                to quickly add words
               </p>
             </div>
           </div>
@@ -202,7 +218,7 @@ export function VocabularyManager({ words, onBack, onAddWord, onRemoveWord, nati
             </div>
             <h3 className="flex-1">Your Word Collection</h3>
           </div>
-          
+
           {words.length === 0 ? (
             <Card className="border-2 border-dashed">
               <div className="p-12 text-center">
@@ -217,47 +233,53 @@ export function VocabularyManager({ words, onBack, onAddWord, onRemoveWord, nati
             </Card>
           ) : (
             <div className="space-y-2.5">
-              {words.slice().reverse().map((w, index) => (
-                <motion.div
-                  key={w.id}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.02, type: "spring" }}
-                >
-                  <motion.div whileHover={{ scale: 1.01, x: 4 }} transition={{ type: "spring", stiffness: 300 }}>
-                    <Card className="border-2 hover:border-primary/30 transition-all hover:shadow-sm bg-gradient-to-br from-white to-primary/5">
-                      <div className="p-4">
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex items-start gap-3 flex-1">
-                            <div className="bg-primary/10 rounded-lg p-1.5 mt-0.5">
-                              <BookOpen className="w-3.5 h-3.5 text-primary" />
+              {words
+                .slice()
+                .reverse()
+                .map((w, index) => (
+                  <motion.div
+                    key={w.id}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.02, type: "spring" }}
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.01, x: 4 }}
+                      transition={{ type: "spring", stiffness: 300 }}
+                    >
+                      <Card className="border-2 hover:border-primary/30 transition-all hover:shadow-sm bg-gradient-to-br from-white to-primary/5">
+                        <div className="p-4">
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex items-start gap-3 flex-1">
+                              <div className="bg-primary/10 rounded-lg p-1.5 mt-0.5">
+                                <BookOpen className="w-3.5 h-3.5 text-primary" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <h4 className="mb-1">{w.text}</h4>
+                                {w.note && (
+                                  <p className="text-sm text-muted-foreground line-clamp-2">
+                                    {w.note}
+                                  </p>
+                                )}
+                              </div>
                             </div>
-                            <div className="flex-1 min-w-0">
-                              <h4 className="mb-1">{w.text}</h4>
-                              {w.note && (
-                                <p className="text-sm text-muted-foreground line-clamp-2">
-                                  {w.note}
-                                </p>
-                              )}
-                            </div>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => {
+                                onRemoveWord(w.id);
+                                toast.success(`"${w.text}" removed`);
+                              }}
+                              className="text-destructive hover:bg-destructive/10 shrink-0"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
                           </div>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => {
-                              onRemoveWord(w.id);
-                              toast.success(`"${w.text}" removed`);
-                            }}
-                            className="text-destructive hover:bg-destructive/10 shrink-0"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
                         </div>
-                      </div>
-                    </Card>
+                      </Card>
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              ))}
+                ))}
             </div>
           )}
         </div>

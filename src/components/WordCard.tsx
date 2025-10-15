@@ -1,19 +1,10 @@
+import { BookOpen, RotateCcw, Volume2, X } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { Card, CardContent } from "./ui/card";
-import { Button } from "./ui/button";
+import { Word } from "../interface";
 import { Badge } from "./ui/badge";
-import { Volume2, X, RotateCcw, BookOpen } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
-
-interface Word {
-  id: string;
-  text: string;
-  translation: string;
-  note: string;
-  deckId: string;
-  nextReviewDate: string;
-  isVocabulary: boolean;
-}
+import { Button } from "./ui/button";
+import { Card, CardContent } from "./ui/card";
 
 interface WordCardProps {
   word: Word;
@@ -22,7 +13,12 @@ interface WordCardProps {
   onClose: () => void;
 }
 
-export function WordCard({ word, nativeLanguage, onComplete, onClose }: WordCardProps) {
+export function WordCard({
+  word,
+  nativeLanguage,
+  onComplete,
+  onClose,
+}: WordCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const [showRating, setShowRating] = useState(false);
 
@@ -66,7 +62,9 @@ export function WordCard({ word, nativeLanguage, onComplete, onClose }: WordCard
                   </div>
                   <div>
                     <h2 className="text-2xl">{word.text}</h2>
-                    <p className="text-sm text-muted-foreground">Vocabulary Word</p>
+                    <p className="text-sm text-muted-foreground">
+                      Vocabulary Word
+                    </p>
                   </div>
                 </div>
               </div>
@@ -74,7 +72,12 @@ export function WordCard({ word, nativeLanguage, onComplete, onClose }: WordCard
                 <Button variant="ghost" size="icon" className="shrink-0">
                   <Volume2 className="w-4 h-4" />
                 </Button>
-                <Button variant="ghost" size="icon" onClick={onClose} className="shrink-0">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={onClose}
+                  className="shrink-0"
+                >
                   <X className="w-4 h-4" />
                 </Button>
               </div>
@@ -102,8 +105,8 @@ export function WordCard({ word, nativeLanguage, onComplete, onClose }: WordCard
                           What does <strong>"{word.text}"</strong> mean?
                         </p>
                       </div>
-                      <Button 
-                        onClick={handleFlip} 
+                      <Button
+                        onClick={handleFlip}
                         className="w-full bg-primary hover:bg-primary/90"
                         size="lg"
                       >
@@ -122,11 +125,14 @@ export function WordCard({ word, nativeLanguage, onComplete, onClose }: WordCard
                     <div className="space-y-5">
                       <div className="text-center mb-4">
                         <div className="text-3xl mb-2">✓</div>
-                        <Badge variant="secondary" className="bg-green-200 text-green-800">
+                        <Badge
+                          variant="secondary"
+                          className="bg-green-200 text-green-800"
+                        >
                           Answer
                         </Badge>
                       </div>
-                      
+
                       <div className="bg-white/60 rounded-lg p-4 border border-green-200">
                         <p className="text-xs text-muted-foreground mb-1">
                           Translation ({nativeLanguage})
@@ -172,7 +178,7 @@ export function WordCard({ word, nativeLanguage, onComplete, onClose }: WordCard
                       This helps schedule your next review
                     </p>
                   </div>
-                  
+
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     <motion.button
                       whileHover={{ scale: 1.05 }}
@@ -183,7 +189,9 @@ export function WordCard({ word, nativeLanguage, onComplete, onClose }: WordCard
                       <div className="flex flex-col items-center gap-2">
                         <span className="text-3xl">😰</span>
                         <span className="text-sm">Again</span>
-                        <span className="text-xs text-muted-foreground">Forgot it</span>
+                        <span className="text-xs text-muted-foreground">
+                          Forgot it
+                        </span>
                       </div>
                     </motion.button>
 
@@ -196,7 +204,9 @@ export function WordCard({ word, nativeLanguage, onComplete, onClose }: WordCard
                       <div className="flex flex-col items-center gap-2">
                         <span className="text-3xl">😕</span>
                         <span className="text-sm">Hard</span>
-                        <span className="text-xs text-muted-foreground">Struggled</span>
+                        <span className="text-xs text-muted-foreground">
+                          Struggled
+                        </span>
                       </div>
                     </motion.button>
 
@@ -209,7 +219,9 @@ export function WordCard({ word, nativeLanguage, onComplete, onClose }: WordCard
                       <div className="flex flex-col items-center gap-2">
                         <span className="text-3xl">🤔</span>
                         <span className="text-sm">Good</span>
-                        <span className="text-xs text-muted-foreground">Got it</span>
+                        <span className="text-xs text-muted-foreground">
+                          Got it
+                        </span>
                       </div>
                     </motion.button>
 
@@ -222,7 +234,9 @@ export function WordCard({ word, nativeLanguage, onComplete, onClose }: WordCard
                       <div className="flex flex-col items-center gap-2">
                         <span className="text-3xl">😊</span>
                         <span className="text-sm">Easy</span>
-                        <span className="text-xs text-muted-foreground">Know it!</span>
+                        <span className="text-xs text-muted-foreground">
+                          Know it!
+                        </span>
                       </div>
                     </motion.button>
                   </div>
