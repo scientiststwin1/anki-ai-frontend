@@ -5,7 +5,7 @@ import { Dashboard } from "./components/Dashboard/Dashboard";
 import { FirstStoryModal } from "./components/FirstStoryModal";
 import { Onboarding } from "./components/Onboarding/Onboarding";
 import { Settings } from "./components/Settings";
-import { StoryReader } from "./components/StoryReader";
+import { StoryReader } from "./components/StoryReader/StoryReader";
 import { Toaster } from "./components/ui/sonner";
 import { VocabularyManager } from "./components/VocabularyManager/VocabularyManager";
 import { Story, UserProfile, Word } from "./interface";
