@@ -16,7 +16,7 @@ import { Story, Word } from "../interface";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
-import { WordCard } from "./WordCard";
+import { WordCard } from "./WordCard/WordCard";
 
 interface StoryReaderProps {
   story: Story;
