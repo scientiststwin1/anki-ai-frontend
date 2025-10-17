@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { AllStories } from "./components/AllStories";
-import { Dashboard } from "./components/Dashboard";
+import { Dashboard } from "./components/Dashboard/Dashboard";
 import { FirstStoryModal } from "./components/FirstStoryModal";
 import { Onboarding } from "./components/Onboarding";
 import { Settings } from "./components/Settings";
