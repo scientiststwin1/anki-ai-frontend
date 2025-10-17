@@ -1,7 +1,12 @@
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from "./ui/dialog";
-import { Button } from "./ui/button";
+import { Award, BookOpen, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
-import { Award, Sparkles, BookOpen } from "lucide-react";
+import { Button } from "./ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "./ui/dialog";
 
 interface FirstStoryModalProps {
   isOpen: boolean;
@@ -9,13 +14,18 @@ interface FirstStoryModalProps {
   wordCount: number;
 }
 
-export function FirstStoryModal({ isOpen, onClose, wordCount }: FirstStoryModalProps) {
+export function FirstStoryModal({
+  isOpen,
+  onClose,
+  wordCount,
+}: FirstStoryModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md border-2 border-green-500/30 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
         <DialogTitle className="sr-only">First Story Completed</DialogTitle>
         <DialogDescription className="sr-only">
-          Congratulations on completing your first story and mastering {wordCount} vocabulary {wordCount === 1 ? 'word' : 'words'}.
+          Congratulations on completing your first story and mastering{" "}
+          {wordCount} vocabulary {wordCount === 1 ? "word" : "words"}.
         </DialogDescription>
         <div className="text-center py-6">
           {/* Animated Icon */}
@@ -54,7 +64,9 @@ export function FirstStoryModal({ isOpen, onClose, wordCount }: FirstStoryModalP
             transition={{ delay: 0.4 }}
             className="text-muted-foreground mb-6 max-w-sm mx-auto"
           >
-            Congratulations! You've completed your first story and mastered {wordCount} vocabulary {wordCount === 1 ? 'word' : 'words'}. This is just the beginning of your learning journey!
+            Congratulations! You've completed your first story and mastered{" "}
+            {wordCount} vocabulary {wordCount === 1 ? "word" : "words"}. This is
+            just the beginning of your learning journey!
           </motion.p>
 
           {/* Stats Badge */}
@@ -68,7 +80,9 @@ export function FirstStoryModal({ isOpen, onClose, wordCount }: FirstStoryModalP
               <BookOpen className="w-6 h-6 text-green-600" />
               <div className="text-left">
                 <div className="text-2xl text-green-700">{wordCount}</div>
-                <div className="text-xs text-muted-foreground">Words Mastered</div>
+                <div className="text-xs text-muted-foreground">
+                  Words Mastered
+                </div>
               </div>
             </div>
           </motion.div>

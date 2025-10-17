@@ -1,23 +1,14 @@
-import { Button } from "./ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Calendar, Sparkles, X } from "lucide-react";
+import { Deck, Word } from "../interface";
 import { Badge } from "./ui/badge";
-import { Sparkles, X, Calendar } from "lucide-react";
-
-interface Word {
-  id: string;
-  text: string;
-  translation: string;
-  note: string;
-  deckId: string;
-  nextReviewDate: string;
-  isVocabulary: boolean;
-}
-
-interface Deck {
-  id: string;
-  name: string;
-  color: string;
-}
+import { Button } from "./ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 
 interface TodayVocabularyProps {
   words: Word[];
@@ -26,8 +17,13 @@ interface TodayVocabularyProps {
   onRemoveWord: (wordId: string) => void;
 }
 
-export function TodayVocabulary({ words, decks, onGenerateStory, onRemoveWord }: TodayVocabularyProps) {
-  const getDeckById = (deckId: string) => {
+export function TodayVocabulary({
+  words,
+  decks,
+  onGenerateStory,
+  onRemoveWord,
+}: TodayVocabularyProps) {
+  const getDeckById = (deckId?: string) => {
     return decks.find((d) => d.id === deckId);
   };
 
@@ -61,7 +57,8 @@ export function TodayVocabulary({ words, decks, onGenerateStory, onRemoveWord }:
             <div>
               <CardTitle>Today's Vocabulary</CardTitle>
               <CardDescription>
-                {words.length} word{words.length !== 1 ? "s" : ""} to learn today
+                {words.length} word{words.length !== 1 ? "s" : ""} to learn
+                today
               </CardDescription>
             </div>
           </div>
@@ -83,11 +80,13 @@ export function TodayVocabulary({ words, decks, onGenerateStory, onRemoveWord }:
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span>{word.text}</span>
-                    <span className="text-muted-foreground">→ {word.translation}</span>
+                    <span className="text-muted-foreground">
+                      → {word.translation}
+                    </span>
                     {deck && (
                       <Badge variant="secondary" className="gap-1">
-                        <div 
-                          className="w-2 h-2 rounded-full" 
+                        <div
+                          className="w-2 h-2 rounded-full"
                           style={{ backgroundColor: deck.color }}
                         />
                         {deck.name}
