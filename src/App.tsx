@@ -7,7 +7,7 @@ import { Onboarding } from "./components/Onboarding";
 import { Settings } from "./components/Settings";
 import { StoryReader } from "./components/StoryReader";
 import { Toaster } from "./components/ui/sonner";
-import { VocabularyManager } from "./components/VocabularyManager";
+import { VocabularyManager } from "./components/VocabularyManager/VocabularyManager";
 import { Story, UserProfile, Word } from "./interface";
 
 // Story generation based on user's vocabulary words
