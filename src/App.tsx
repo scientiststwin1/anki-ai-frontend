@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { AllStories } from "./components/AllStories";
 import { Dashboard } from "./components/Dashboard/Dashboard";
 import { FirstStoryModal } from "./components/FirstStoryModal";
-import { Onboarding } from "./components/Onboarding";
+import { Onboarding } from "./components/Onboarding/Onboarding";
 import { Settings } from "./components/Settings";
 import { StoryReader } from "./components/StoryReader";
 import { Toaster } from "./components/ui/sonner";
