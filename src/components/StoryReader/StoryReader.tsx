@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useParams, Navigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Story, Word } from "../../interface";
 import { WordCard } from "../WordCard/WordCard";
@@ -8,30 +9,109 @@ import { StoryContent } from "./StoryContent";
 import { StoryNavigation } from "./StoryNavigation";
 import { StoryReaderHeader, StoryTitleSection } from "./StoryReaderHeader";
 import { VocabularySidebar } from "./VocabularySidebar";
+import { useAppContext } from "../../context/AppContext";
 
 interface StoryReaderProps {
-  story: Story;
-  onBack: () => void;
-  nativeLanguage: string;
-  onStoryProgress?: (storyId: string, completedWordIds: string[]) => void;
-  todayWords?: Word[];
-  incompleteStories?: Story[];
-  currentStoryIndex?: number;
-  onPrevious?: () => void;
-  onNext?: () => void;
+  // No props needed - component will handle its own context and navigation
 }
 
-export function StoryReader({
-  story,
-  onBack,
-  nativeLanguage,
-  onStoryProgress,
-  todayWords = [],
-  incompleteStories = [],
-  currentStoryIndex = -1,
-  onPrevious,
-  onNext,
-}: StoryReaderProps) {
+export function StoryReader({}: StoryReaderProps) {
+  const { userProfile, stories, setStories, vocabulary, setFirstStoryWordCount, setShowFirstStoryModal } = useAppContext();
+  const { storyId } = useParams<{ storyId: string }>();
+  const navigate = useNavigate();
+
+  const currentStory = stories.find(s => s.id === storyId);
+  
+  if (!currentStory) {
+    return <Navigate to="/" replace />;
+  }
+
+  const getTodayWords = (): Word[] => {
+    const today = new Date().toDateString();
+    return vocabulary.filter((word) => {
+      const reviewDate = new Date(word.nextReviewDate).toDateString();
+      return reviewDate === today;
+    });
+  };
+
+  const handleStoryProgress = (storyId: string, completedWordIds: string[]) => {
+    setStories((prevStories: Story[]) => {
+      const updatedStories = prevStories.map((story: Story) => {
+        if (story.id === storyId) {
+          const vocabularyWords = story.words.filter((w: Word) => w.isVocabulary);
+          const isComplete =
+            vocabularyWords.length > 0 &&
+            vocabularyWords.every((w: Word) => completedWordIds.includes(w.id));
+
+          const wasNotComplete = !story.isComplete;
+
+          // Show completion toast or modal when story is completed
+          if (isComplete && wasNotComplete) {
+            // Check if this is the first story ever completed
+            const completedStoriesCount = prevStories.filter(
+              (s: Story) => s.isComplete,
+            ).length;
+            const isFirstStory = completedStoriesCount === 0;
+
+            setTimeout(() => {
+              if (isFirstStory) {
+                // Show special modal for first story completion
+                setFirstStoryWordCount(vocabularyWords.length);
+                setShowFirstStoryModal(true);
+              } else {
+                // Show regular toast for subsequent stories
+                toast.success(
+                  `Story completed! You've mastered all ${vocabularyWords.length} words! 🎉`,
+                );
+              }
+            }, 500);
+          }
+
+          return {
+            ...story,
+            completedWordIds,
+            isComplete,
+          };
+        }
+        return story;
+      });
+
+      return updatedStories;
+    });
+  };
+
+  const handleBackToDashboard = () => {
+    navigate('/');
+  };
+
+  const incompleteStories = stories.filter((s) => !s.isComplete);
+  const currentIndex = incompleteStories.findIndex(
+    (s) => s.id === currentStory.id,
+  );
+
+  const hasPrevious = currentIndex > 0;
+  const hasNext = currentStory.isComplete
+    ? incompleteStories.length > 0
+    : currentIndex >= 0 && currentIndex < incompleteStories.length - 1;
+
+  const handlePrevious = () => {
+    if (hasPrevious) {
+      navigate(`/story/${incompleteStories[currentIndex - 1].id}`);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentStory.isComplete && incompleteStories.length > 0) {
+      navigate(`/story/${incompleteStories[0].id}`);
+    } else if (hasNext && currentIndex >= 0) {
+      navigate(`/story/${incompleteStories[currentIndex + 1].id}`);
+    }
+  };
+
+  const story = currentStory;
+  const nativeLanguage = userProfile!.nativeLanguage;
+  const todayWords = getTodayWords();
+  const currentStoryIndex = currentIndex;
   const [selectedWord, setSelectedWord] = useState<Word | null>(null);
   const [wordProgress, setWordProgress] = useState<Record<string, number>>(
     () => {
@@ -74,9 +154,7 @@ export function StoryReader({
       );
 
     // Report progress to parent
-    if (onStoryProgress) {
-      onStoryProgress(story.id, completedWordIds);
-    }
+    handleStoryProgress(story.id, completedWordIds);
 
     // Show toast if all today's words are now complete
     if (justCompletedTodayWords) {
@@ -113,7 +191,7 @@ export function StoryReader({
     <div className="min-h-screen bg-background">
       <StoryReaderHeader
         story={story}
-        onBack={onBack}
+        onBack={handleBackToDashboard}
         progress={progress}
         totalWords={totalWords}
         todayWordsInStory={todayWordsInStory}
@@ -125,7 +203,7 @@ export function StoryReader({
       <div className="max-w-5xl mx-auto px-6 py-8">
         <StoryTitleSection
           story={story}
-          onBack={onBack}
+          onBack={handleBackToDashboard}
           progress={progress}
           totalWords={totalWords}
           todayWordsInStory={todayWordsInStory}
@@ -136,7 +214,7 @@ export function StoryReader({
 
         <CompletionMessages
           progress={progress}
-          onNext={onNext}
+          onNext={hasNext ? handleNext : undefined}
           incompleteStories={incompleteStories}
           currentStoryIndex={currentStoryIndex}
           allTodayWordsReviewed={allTodayWordsReviewed}
@@ -181,8 +259,8 @@ export function StoryReader({
         <StoryNavigation
           incompleteStories={incompleteStories}
           currentStoryIndex={currentStoryIndex}
-          onPrevious={onPrevious}
-          onNext={onNext}
+          onPrevious={hasPrevious ? handlePrevious : undefined}
+          onNext={hasNext ? handleNext : undefined}
         />
       </div>
 

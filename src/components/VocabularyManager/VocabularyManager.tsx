@@ -1,31 +1,37 @@
 import { ArrowLeft, BookOpen, Target } from "lucide-react";
 import { motion } from "motion/react";
+import { useNavigate } from "react-router-dom";
 import { Word } from "../../interface";
 import { AddWordForm } from "./AddWordForm";
 import { WordList } from "./WordList";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { getAllCards } from "../../queries";
+import { useAppContext } from "../../context/AppContext";
 
 interface VocabularyManagerProps {
-  onBack: () => void;
-  onRemoveWord: (wordId: string) => void;
-  nativeLanguage: string;
+  // No props needed - component will handle its own context and navigation
 }
 
-export function VocabularyManager({
-  onBack,
-  onRemoveWord,
-  nativeLanguage,
-}: VocabularyManagerProps) {
+export function VocabularyManager({}: VocabularyManagerProps) {
+  const { userProfile, vocabulary, setVocabulary } = useAppContext();
+  const navigate = useNavigate();
   const { data: getAllCardsData } = getAllCards();
+
+  const handleRemoveWord = (wordId: string) => {
+    setVocabulary(vocabulary.filter((w) => w.id !== wordId));
+  };
+
+  const handleCloseVocabulary = () => {
+    navigate('/');
+  };
 
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="border-b bg-gradient-to-br from-card to-primary/5">
         <div className="max-w-4xl mx-auto px-6 py-4">
-          <Button variant="ghost" onClick={onBack} className="mb-3">
+          <Button variant="ghost" onClick={handleCloseVocabulary} className="mb-3">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard
           </Button>
@@ -61,7 +67,7 @@ export function VocabularyManager({
         <AddWordForm />
 
         {/* Word List */}
-        <WordList onRemoveWord={onRemoveWord} />
+        <WordList onRemoveWord={handleRemoveWord} />
       </div>
     </div>
   );
