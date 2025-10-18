@@ -20,9 +20,7 @@ export function Step4({ data, updateData }: StepProps) {
       className="space-y-6"
     >
       <div>
-        <h2 className="mb-2">
-          What types of stories do you enjoy?
-        </h2>
+        <h2 className="mb-2">What types of stories do you enjoy?</h2>
         <p className="text-muted-foreground">
           Select at least one genre (you can choose multiple)
         </p>
@@ -70,13 +68,9 @@ export function Step4({ data, updateData }: StepProps) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <span className="text-sm text-muted-foreground">
-            Selected:
-          </span>
+          <span className="text-sm text-muted-foreground">Selected:</span>
           {data.genres.map((genreId) => {
-            const genre = GENRE_OPTIONS.find(
-              (g) => g.id === genreId,
-            );
+            const genre = GENRE_OPTIONS.find((g) => g.id === genreId);
             return (
               <Badge
                 key={genreId}

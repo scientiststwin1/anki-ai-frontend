@@ -53,7 +53,6 @@ export function StoryReader({
     setWordProgress(initial);
   }, [story.id]); // Changed from story.completedWordIds to story.id
 
-
   const handleWordComplete = (wordId: string, difficulty: number) => {
     const newProgress = {
       ...wordProgress,

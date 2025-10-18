@@ -15,8 +15,8 @@ export function NoWordsToLearn({ onOpenVocabulary }: NoWordsToLearnProps) {
         </div>
         <h3 className="mb-2">Start Your Learning Journey</h3>
         <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-          Add vocabulary words to begin your personalized learning
-          experience with stories!
+          Add vocabulary words to begin your personalized learning experience
+          with stories!
         </p>
         <Button
           onClick={onOpenVocabulary}
@@ -30,4 +30,3 @@ export function NoWordsToLearn({ onOpenVocabulary }: NoWordsToLearnProps) {
     </Card>
   );
 }
-

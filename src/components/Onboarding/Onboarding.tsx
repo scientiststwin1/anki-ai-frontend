@@ -48,7 +48,6 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     setData((prev) => ({ ...prev, [field]: value }));
   };
 
-
   const canProceed = () => {
     switch (step) {
       case 1:

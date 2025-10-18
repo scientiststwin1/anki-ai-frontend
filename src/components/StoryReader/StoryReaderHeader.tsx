@@ -78,8 +78,7 @@ export function StoryTitleSection({
               currentStoryIndex !== undefined &&
               currentStoryIndex >= 0 && (
                 <Badge variant="outline" className="text-xs">
-                  Story {currentStoryIndex + 1} of{" "}
-                  {incompleteStories.length}
+                  Story {currentStoryIndex + 1} of {incompleteStories.length}
                 </Badge>
               )}
           </div>

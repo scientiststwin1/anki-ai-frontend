@@ -131,7 +131,7 @@ export default function App() {
 
   const handleAddWord = (word: Word) => {
     const newVocabulary = [...vocabulary, word];
-    setVocabulary(newVocabulary);
+    // setVocabulary(newVocabulary);
 
     // Auto-generate stories when we have enough words
     // Check if we now have enough unused words to create stories
@@ -175,7 +175,7 @@ export default function App() {
   };
 
   const handleRemoveWord = (wordId: string) => {
-    setVocabulary(vocabulary.filter((w) => w.id !== wordId));
+    // setVocabulary(vocabulary.filter((w) => w.id !== wordId));
   };
 
   // Get words that haven't been used in any story yet
@@ -364,9 +364,7 @@ export default function App() {
     return (
       <>
         <VocabularyManager
-          words={vocabulary}
           onBack={handleCloseVocabulary}
-          onAddWord={handleAddWord}
           onRemoveWord={handleRemoveWord}
           nativeLanguage={userProfile.nativeLanguage}
         />
@@ -442,7 +440,6 @@ export default function App() {
     <>
       <Dashboard
         stories={stories}
-        vocabulary={vocabulary}
         todayWords={getTodayWords()}
         unusedWords={getUnusedWords()}
         onSelectStory={handleSelectStory}

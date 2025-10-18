@@ -20,9 +20,7 @@ export function Step1({ data, updateData }: StepProps) {
       </div>
       <RadioGroup
         value={data.englishLevel}
-        onValueChange={(value: string) =>
-          updateData("englishLevel", value)
-        }
+        onValueChange={(value: string) => updateData("englishLevel", value)}
         className="space-y-3"
       >
         <motion.div
@@ -37,10 +35,7 @@ export function Step1({ data, updateData }: StepProps) {
           `}
         >
           <RadioGroupItem value="beginner" id="beginner" />
-          <Label
-            htmlFor="beginner"
-            className="cursor-pointer flex-1"
-          >
+          <Label htmlFor="beginner" className="cursor-pointer flex-1">
             <div>
               <div className="mb-1">Beginner (A1-A2)</div>
               <p className="text-muted-foreground text-sm">
@@ -61,10 +56,7 @@ export function Step1({ data, updateData }: StepProps) {
           `}
         >
           <RadioGroupItem value="intermediate" id="intermediate" />
-          <Label
-            htmlFor="intermediate"
-            className="cursor-pointer flex-1"
-          >
+          <Label htmlFor="intermediate" className="cursor-pointer flex-1">
             <div>
               <div className="mb-1">Intermediate (B1-B2)</div>
               <p className="text-muted-foreground text-sm">
@@ -85,10 +77,7 @@ export function Step1({ data, updateData }: StepProps) {
           `}
         >
           <RadioGroupItem value="advanced" id="advanced" />
-          <Label
-            htmlFor="advanced"
-            className="cursor-pointer flex-1"
-          >
+          <Label htmlFor="advanced" className="cursor-pointer flex-1">
             <div>
               <div className="mb-1">Advanced (C1-C2)</div>
               <p className="text-muted-foreground text-sm">

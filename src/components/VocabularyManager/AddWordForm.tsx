@@ -3,20 +3,29 @@ import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Word } from "../../interface";
+import { addCardMutation } from "../../queries";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 
-interface AddWordFormProps {
-  onAddWord: (word: Word) => void;
-}
-
-export function AddWordForm({ onAddWord }: AddWordFormProps) {
+export function AddWordForm() {
   const [word, setWord] = useState("");
   const [note, setNote] = useState("");
   const [showNote, setShowNote] = useState(false);
+
+  const { mutate: addCardMutationMutate } = addCardMutation({
+    onSuccess: () => {
+      toast.success("Word added to vocabulary");
+      setWord("");
+      setNote("");
+      setShowNote(false);
+    },
+    onError: () => {
+      toast.error("Failed to add word to vocabulary");
+    },
+  });
 
   const handleAddWord = () => {
     if (!word.trim()) {
@@ -33,13 +42,7 @@ export function AddWordForm({ onAddWord }: AddWordFormProps) {
       isVocabulary: true,
     };
 
-    onAddWord(newWord);
-    toast.success(`"${word}" added to vocabulary`);
-
-    // Reset form
-    setWord("");
-    setNote("");
-    setShowNote(false);
+    addCardMutationMutate({ word: word.trim(), note: note.trim() });
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -132,10 +135,7 @@ export function AddWordForm({ onAddWord }: AddWordFormProps) {
           </AnimatePresence>
 
           {/* Add Button */}
-          <motion.div
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.99 }}
-          >
+          <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
             <Button
               onClick={handleAddWord}
               className="w-full bg-gradient-to-r from-primary to-emerald-600 hover:from-primary/90 hover:to-emerald-600/90 h-10 shadow-sm"

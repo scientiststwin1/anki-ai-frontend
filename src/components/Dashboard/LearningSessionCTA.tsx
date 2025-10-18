@@ -131,10 +131,7 @@ export function LearningSessionCTA({
           </div>
 
           {/* Exciting CTA Button */}
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Button
               onClick={() =>
                 incompleteStories.length > 0 &&
@@ -191,4 +188,3 @@ export function LearningSessionCTA({
     </motion.div>
   );
 }
-

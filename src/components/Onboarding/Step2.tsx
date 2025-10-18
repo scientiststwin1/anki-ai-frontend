@@ -25,18 +25,14 @@ export function Step2({ data, updateData }: StepProps) {
       </div>
       <Select
         value={data.nativeLanguage}
-        onValueChange={(value: string) =>
-          updateData("nativeLanguage", value)
-        }
+        onValueChange={(value: string) => updateData("nativeLanguage", value)}
       >
         <SelectTrigger className="h-14 text-base border-2">
           <SelectValue placeholder="Select your native language" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="spanish">🇪🇸 Spanish</SelectItem>
-          <SelectItem value="chinese">
-            🇨🇳 Chinese (Mandarin)
-          </SelectItem>
+          <SelectItem value="chinese">🇨🇳 Chinese (Mandarin)</SelectItem>
           <SelectItem value="hindi">🇮🇳 Hindi</SelectItem>
           <SelectItem value="arabic">🇸🇦 Arabic</SelectItem>
           <SelectItem value="portuguese">🇵🇹 Portuguese</SelectItem>

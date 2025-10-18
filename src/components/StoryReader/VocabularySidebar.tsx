@@ -41,8 +41,7 @@ export function VocabularySidebar({
                 const status =
                   difficulty === 3
                     ? {
-                        color:
-                          "bg-green-100 border-green-300 text-green-700",
+                        color: "bg-green-100 border-green-300 text-green-700",
                         icon: "✓",
                       }
                     : difficulty === 2
@@ -59,13 +58,11 @@ export function VocabularySidebar({
                           }
                         : difficulty === 0
                           ? {
-                              color:
-                                "bg-red-100 border-red-300 text-red-700",
+                              color: "bg-red-100 border-red-300 text-red-700",
                               icon: "✕",
                             }
                           : {
-                              color:
-                                "bg-gray-50 border-gray-200 text-gray-600",
+                              color: "bg-gray-50 border-gray-200 text-gray-600",
                               icon: "·",
                             };
 
