@@ -1,6 +1,7 @@
 import { Sparkles } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { OnboardingData, OnboardingProps } from "./types";
@@ -18,6 +19,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     age: "",
     genres: [],
   });
+  const navigate = useNavigate();
 
   // Update URL based on step
   useEffect(() => {
@@ -67,8 +69,8 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     if (step < 4) {
       setStep(step + 1);
     } else {
-      window.history.pushState({}, "", "/");
       onComplete(data);
+      navigate("/");
     }
   };
 

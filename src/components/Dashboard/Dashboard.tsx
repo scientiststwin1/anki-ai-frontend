@@ -2,40 +2,60 @@ import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { BookOpen, Settings, Layers, Plus, Library } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Story, Word } from "../../interface";
 import { CelebrationScreen } from "./CelebrationScreen";
 import { LearningSessionCTA } from "./LearningSessionCTA";
 import { CurrentStoryCard } from "./CurrentStoryCard";
 import { NoWordsToLearn } from "./NoWordsToLearn";
 import { getAllCards } from "../../queries";
+import { useAppContext } from "../../context/AppContext";
 
 interface DashboardProps {
-  stories: Story[];
-  todayWords: Word[];
-  unusedWords: Word[];
-  onSelectStory: (story: Story) => void;
-  onOpenSettings: () => void;
-  onOpenVocabulary: () => void;
-  onViewAllStories: () => void;
-  userProfile: {
-    englishLevel: string;
-    nativeLanguage: string;
-    age: string;
-    genres: string[];
-  };
+  // No props needed - component will handle its own context and navigation
 }
 
-export function Dashboard({
-  stories,
-  todayWords,
-  unusedWords,
-  onSelectStory,
-  onOpenSettings,
-  onOpenVocabulary,
-  onViewAllStories,
-  userProfile,
-}: DashboardProps) {
+export function Dashboard({}: DashboardProps) {
+  const { userProfile, stories, vocabulary } = useAppContext();
+  const navigate = useNavigate();
   const { data: getAllCardsData } = getAllCards();
+
+  const getTodayWords = (): Word[] => {
+    const today = new Date().toDateString();
+    return vocabulary.filter((word) => {
+      const reviewDate = new Date(word.nextReviewDate).toDateString();
+      return reviewDate === today;
+    });
+  };
+
+  const getUnusedWords = (): Word[] => {
+    const usedWordIds = new Set<string>();
+    stories.forEach((story) => {
+      story.words.forEach((word) => {
+        usedWordIds.add(word.id);
+      });
+    });
+    return vocabulary.filter((word) => !usedWordIds.has(word.id));
+  };
+
+  const handleSelectStory = (story: Story) => {
+    navigate(`/story/${story.id}`);
+  };
+
+  const handleOpenSettings = () => {
+    navigate('/settings');
+  };
+
+  const handleOpenVocabulary = () => {
+    navigate('/vocabulary');
+  };
+
+  const handleViewAllStories = () => {
+    navigate('/stories');
+  };
+
+  const todayWords = getTodayWords();
+  const unusedWords = getUnusedWords();
 
   // Smart story selection: prioritize incomplete stories, then most recent
   const incompleteStories = stories.filter((s) => !s.isComplete);
@@ -77,7 +97,7 @@ export function Dashboard({
             </div>
             <h2 className="text-lg">StoryLearn</h2>
           </div>
-          <Button onClick={onOpenSettings} variant="ghost" size="icon">
+          <Button onClick={handleOpenSettings} variant="ghost" size="icon">
             <Settings className="w-5 h-5" />
           </Button>
         </div>
@@ -90,8 +110,8 @@ export function Dashboard({
             <CelebrationScreen
               completedStoriesCount={completedStoriesCount}
               totalWordsMastered={totalWordsMastered}
-              onOpenVocabulary={onOpenVocabulary}
-              onViewAllStories={onViewAllStories}
+              onOpenVocabulary={handleOpenVocabulary}
+              onViewAllStories={handleViewAllStories}
             />
           ) : unusedWords.length > 0 || todayWords.length > 0 ? (
             <LearningSessionCTA
@@ -99,7 +119,7 @@ export function Dashboard({
               todayWords={todayWords}
               completedStoriesCount={completedStoriesCount}
               incompleteStories={incompleteStories}
-              onSelectStory={onSelectStory}
+              onSelectStory={handleSelectStory}
             />
           ) : currentStory ? (
             <CurrentStoryCard
@@ -107,10 +127,10 @@ export function Dashboard({
               incompleteStoriesCount={incompleteStoriesCount}
               completedStoriesCount={completedStoriesCount}
               incompleteStories={incompleteStories}
-              onSelectStory={onSelectStory}
+              onSelectStory={handleSelectStory}
             />
           ) : (
-            <NoWordsToLearn onOpenVocabulary={onOpenVocabulary} />
+            <NoWordsToLearn onOpenVocabulary={handleOpenVocabulary} />
           )}
         </div>
 
@@ -158,7 +178,7 @@ export function Dashboard({
         <div>
           <div className="flex items-center justify-between mb-6">
             <h3>My Vocabulary</h3>
-            <Button onClick={onOpenVocabulary} variant="outline" size="sm">
+            <Button onClick={handleOpenVocabulary} variant="outline" size="sm">
               <Plus className="w-4 h-4 mr-2" />
               Add Words
             </Button>
@@ -166,7 +186,7 @@ export function Dashboard({
 
           <Card
             className="border-2 cursor-pointer hover:shadow-md hover:border-primary/40 transition-all"
-            onClick={onOpenVocabulary}
+            onClick={handleOpenVocabulary}
           >
             <div className="p-5 text-center">
               <div className="bg-primary/10 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3">
@@ -201,7 +221,7 @@ export function Dashboard({
                 <Button
                   variant="ghost"
                   size="sm"
-                  onClick={onViewAllStories}
+                  onClick={handleViewAllStories}
                   className="text-primary hover:bg-primary/10"
                 >
                   <Library className="w-4 h-4 mr-1" />
@@ -218,7 +238,7 @@ export function Dashboard({
                   <Card
                     key={story.id}
                     className="border-2 cursor-pointer hover:shadow-md hover:border-primary/40 transition-all"
-                    onClick={() => onSelectStory(story)}
+                    onClick={() => handleSelectStory(story)}
                   >
                     <div className="p-5">
                       <div className="flex items-center justify-between gap-4">

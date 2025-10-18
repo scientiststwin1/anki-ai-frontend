@@ -7,22 +7,29 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { motion } from "motion/react";
+import { useNavigate } from "react-router-dom";
 import { Story } from "../interface";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
+import { useAppContext } from "../context/AppContext";
 
 interface AllStoriesProps {
-  stories: Story[];
-  onBack: () => void;
-  onSelectStory: (story: Story) => void;
+  // No props needed - component will handle its own context and navigation
 }
 
-export function AllStories({
-  stories,
-  onBack,
-  onSelectStory,
-}: AllStoriesProps) {
+export function AllStories({}: AllStoriesProps) {
+  const { stories } = useAppContext();
+  const navigate = useNavigate();
+
+  const handleBackToDashboard = () => {
+    navigate('/');
+  };
+
+  const handleSelectStory = (story: Story) => {
+    navigate(`/story/${story.id}`);
+  };
+
   const completedCount = stories.filter((s) => s.isComplete).length;
   const inProgressCount = stories.filter(
     (s) => !s.isComplete && s.completedWordIds.length > 0,
@@ -33,7 +40,7 @@ export function AllStories({
       {/* Header */}
       <div className="border-b bg-gradient-to-br from-card to-primary/5">
         <div className="max-w-4xl mx-auto px-6 py-4">
-          <Button variant="ghost" onClick={onBack} className="mb-3">
+          <Button variant="ghost" onClick={handleBackToDashboard} className="mb-3">
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard
           </Button>
@@ -111,7 +118,7 @@ export function AllStories({
                           ? "border-green-500/40 hover:border-green-500/60 bg-gradient-to-br from-green-50/80 to-emerald-50/80 shadow-md hover:shadow-lg"
                           : "border-border hover:border-primary/50 hover:shadow-md bg-gradient-to-br from-white to-primary/5"
                       }`}
-                      onClick={() => onSelectStory(story)}
+                      onClick={() => handleSelectStory(story)}
                     >
                       {/* Decorative sparkle for completed stories */}
                       {story.isComplete && (

@@ -1,6 +1,7 @@
 import { ArrowLeft, Check, Save, Settings as SettingsIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -15,6 +16,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { UserProfile } from "../interface";
+import { useAppContext } from "../context/AppContext";
 
 const GENRE_OPTIONS = [
   { id: "adventure", label: "Adventure", icon: "🏔️" },
@@ -26,14 +28,23 @@ const GENRE_OPTIONS = [
 ];
 
 interface SettingsProps {
-  userProfile: UserProfile;
-  onSave: (profile: UserProfile) => void;
-  onBack: () => void;
+  // No props needed - component will handle its own context and navigation
 }
 
-export function Settings({ userProfile, onSave, onBack }: SettingsProps) {
-  const [profile, setProfile] = useState<UserProfile>(userProfile);
+export function Settings({}: SettingsProps) {
+  const { userProfile, setUserProfile } = useAppContext();
+  const navigate = useNavigate();
+  const [profile, setProfile] = useState<UserProfile>(userProfile!);
   const [hasChanges, setHasChanges] = useState(false);
+
+  const handleSaveSettings = (profile: UserProfile) => {
+    setUserProfile(profile);
+    navigate('/');
+  };
+
+  const handleCloseSettings = () => {
+    navigate('/');
+  };
 
   const updateProfile = (
     field: keyof UserProfile,
@@ -51,7 +62,7 @@ export function Settings({ userProfile, onSave, onBack }: SettingsProps) {
   };
 
   const handleSave = () => {
-    onSave(profile);
+    handleSaveSettings(profile);
     setHasChanges(false);
     toast.success("Settings saved successfully!", {
       description: "Your learning preferences have been updated",
@@ -63,7 +74,7 @@ export function Settings({ userProfile, onSave, onBack }: SettingsProps) {
       {/* Top Navigation Bar */}
       <div className="border-b bg-card sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Button variant="ghost" onClick={onBack}>
+          <Button variant="ghost" onClick={handleCloseSettings}>
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Dashboard
           </Button>
@@ -409,7 +420,7 @@ export function Settings({ userProfile, onSave, onBack }: SettingsProps) {
           <div className="max-w-5xl mx-auto flex gap-3">
             <Button
               variant="outline"
-              onClick={onBack}
+              onClick={handleCloseSettings}
               className="flex-1"
               size="lg"
             >
