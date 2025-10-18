@@ -17,9 +17,7 @@ export function WordCardHeader({ wordText, onClose }: WordCardHeaderProps) {
             </div>
             <div>
               <h2 className="text-2xl">{wordText}</h2>
-              <p className="text-sm text-muted-foreground">
-                Vocabulary Word
-              </p>
+              <p className="text-sm text-muted-foreground">Vocabulary Word</p>
             </div>
           </div>
         </div>

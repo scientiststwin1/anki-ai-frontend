@@ -1,22 +1,16 @@
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
-import {
-  BookOpen,
-  Settings,
-  Layers,
-  Plus,
-  Library,
-} from "lucide-react";
+import { BookOpen, Settings, Layers, Plus, Library } from "lucide-react";
 import { Story, Word } from "../../interface";
 import { CelebrationScreen } from "./CelebrationScreen";
 import { LearningSessionCTA } from "./LearningSessionCTA";
 import { CurrentStoryCard } from "./CurrentStoryCard";
 import { NoWordsToLearn } from "./NoWordsToLearn";
+import { getAllCards } from "../../queries";
 
 interface DashboardProps {
   stories: Story[];
-  vocabulary: Word[];
   todayWords: Word[];
   unusedWords: Word[];
   onSelectStory: (story: Story) => void;
@@ -33,7 +27,6 @@ interface DashboardProps {
 
 export function Dashboard({
   stories,
-  vocabulary,
   todayWords,
   unusedWords,
   onSelectStory,
@@ -42,6 +35,8 @@ export function Dashboard({
   onViewAllStories,
   userProfile,
 }: DashboardProps) {
+  const { data: getAllCardsData } = getAllCards();
+
   // Smart story selection: prioritize incomplete stories, then most recent
   const incompleteStories = stories.filter((s) => !s.isComplete);
 
@@ -124,7 +119,7 @@ export function Dashboard({
           <Card className="border-2">
             <div className="p-6 text-center">
               <div className="text-3xl mb-1 text-primary">
-                {vocabulary.length}
+                {getAllCardsData?.data?.length}
               </div>
               <div className="text-sm text-muted-foreground">Total Words</div>
             </div>
@@ -178,10 +173,11 @@ export function Dashboard({
                 <Layers className="w-6 h-6 text-primary" />
               </div>
               <h4 className="mb-1">
-                {vocabulary.length} {vocabulary.length === 1 ? "Word" : "Words"}
+                {getAllCardsData?.data?.length}{" "}
+                {getAllCardsData?.data?.length === 1 ? "Word" : "Words"}
               </h4>
               <p className="text-sm text-muted-foreground">
-                {vocabulary.length === 0
+                {getAllCardsData?.data?.length === 0
                   ? "Start building your vocabulary library"
                   : "Click to manage your vocabulary"}
               </p>

@@ -55,33 +55,28 @@ export function CurrentStoryCard({
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
                 <Badge
-                  variant={
-                    currentStory.isComplete ? "default" : "secondary"
-                  }
+                  variant={currentStory.isComplete ? "default" : "secondary"}
                   className={`text-xs ${currentStory.isComplete ? "bg-green-600" : ""}`}
                 >
-                  {currentStory.isComplete
-                    ? "✓ Completed"
-                    : "Current Story"}
+                  {currentStory.isComplete ? "✓ Completed" : "Current Story"}
                 </Badge>
-                {incompleteStoriesCount > 1 &&
-                  !currentStory.isComplete && (
-                    <>
-                      <Badge variant="outline" className="text-xs">
-                        Story{" "}
-                        {incompleteStories.findIndex(
-                          (s) => s.id === currentStory.id,
-                        ) + 1}{" "}
-                        of {incompleteStoriesCount}
-                      </Badge>
-                      <Badge
-                        variant="secondary"
-                        className="text-xs bg-green-50 text-green-700 border border-green-200"
-                      >
-                        {completedStoriesCount} completed
-                      </Badge>
-                    </>
-                  )}
+                {incompleteStoriesCount > 1 && !currentStory.isComplete && (
+                  <>
+                    <Badge variant="outline" className="text-xs">
+                      Story{" "}
+                      {incompleteStories.findIndex(
+                        (s) => s.id === currentStory.id,
+                      ) + 1}{" "}
+                      of {incompleteStoriesCount}
+                    </Badge>
+                    <Badge
+                      variant="secondary"
+                      className="text-xs bg-green-50 text-green-700 border border-green-200"
+                    >
+                      {completedStoriesCount} completed
+                    </Badge>
+                  </>
+                )}
               </div>
               <h2 className="mb-2">{currentStory.title}</h2>
               <p className="text-muted-foreground mb-4 line-clamp-2">
@@ -90,23 +85,17 @@ export function CurrentStoryCard({
               <div className="flex items-center gap-4 text-sm text-muted-foreground">
                 {currentStory.isComplete ? (
                   <>
-                    <span className="text-green-600">
-                      All words mastered!
-                    </span>
+                    <span className="text-green-600">All words mastered!</span>
                     <span>•</span>
                     <span>
-                      {
-                        currentStory.words.filter((w) => w.isVocabulary)
-                          .length
-                      }{" "}
+                      {currentStory.words.filter((w) => w.isVocabulary).length}{" "}
                       words
                     </span>
                   </>
                 ) : (
                   <>
                     <span>
-                      {currentStory.words.filter((w) => w.isVocabulary)
-                        .length -
+                      {currentStory.words.filter((w) => w.isVocabulary).length -
                         currentStory.completedWordIds.length}{" "}
                       words remaining
                     </span>
@@ -141,4 +130,3 @@ export function CurrentStoryCard({
     </motion.div>
   );
 }
-

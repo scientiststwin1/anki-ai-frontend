@@ -1,30 +1,24 @@
-import {
-  ArrowLeft,
-  BookOpen,
-  Target,
-} from "lucide-react";
+import { ArrowLeft, BookOpen, Target } from "lucide-react";
 import { motion } from "motion/react";
 import { Word } from "../../interface";
 import { AddWordForm } from "./AddWordForm";
 import { WordList } from "./WordList";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import { getAllCards } from "../../queries";
 
 interface VocabularyManagerProps {
-  words: Word[];
   onBack: () => void;
-  onAddWord: (word: Word) => void;
   onRemoveWord: (wordId: string) => void;
   nativeLanguage: string;
 }
 
 export function VocabularyManager({
-  words,
   onBack,
-  onAddWord,
   onRemoveWord,
   nativeLanguage,
 }: VocabularyManagerProps) {
+  const { data: getAllCardsData } = getAllCards();
 
   return (
     <div className="min-h-screen bg-background">
@@ -51,10 +45,11 @@ export function VocabularyManager({
                 </p>
               </div>
             </div>
-            {words.length > 0 && (
+            {getAllCardsData?.data?.length > 0 && (
               <Badge className="bg-gradient-to-r from-primary to-emerald-600 text-white border-0 shadow-sm px-3 py-1.5">
                 <Target className="w-3 h-3 mr-1.5" />
-                {words.length} {words.length === 1 ? "word" : "words"}
+                {getAllCardsData?.data?.length}{" "}
+                {getAllCardsData?.data?.length === 1 ? "word" : "words"}
               </Badge>
             )}
           </div>
@@ -63,10 +58,10 @@ export function VocabularyManager({
 
       <div className="max-w-4xl mx-auto px-6 py-8">
         {/* Add Word Form */}
-        <AddWordForm onAddWord={onAddWord} />
+        <AddWordForm />
 
         {/* Word List */}
-        <WordList words={words} onRemoveWord={onRemoveWord} />
+        <WordList onRemoveWord={onRemoveWord} />
       </div>
     </div>
   );

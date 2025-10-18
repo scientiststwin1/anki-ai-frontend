@@ -32,9 +32,7 @@ export function WordCardRating({ showRating, onRating }: WordCardRatingProps) {
               <div className="flex flex-col items-center gap-2">
                 <span className="text-3xl">😰</span>
                 <span className="text-sm">Again</span>
-                <span className="text-xs text-muted-foreground">
-                  Forgot it
-                </span>
+                <span className="text-xs text-muted-foreground">Forgot it</span>
               </div>
             </motion.button>
 
@@ -47,9 +45,7 @@ export function WordCardRating({ showRating, onRating }: WordCardRatingProps) {
               <div className="flex flex-col items-center gap-2">
                 <span className="text-3xl">😕</span>
                 <span className="text-sm">Hard</span>
-                <span className="text-xs text-muted-foreground">
-                  Struggled
-                </span>
+                <span className="text-xs text-muted-foreground">Struggled</span>
               </div>
             </motion.button>
 
@@ -62,9 +58,7 @@ export function WordCardRating({ showRating, onRating }: WordCardRatingProps) {
               <div className="flex flex-col items-center gap-2">
                 <span className="text-3xl">🤔</span>
                 <span className="text-sm">Good</span>
-                <span className="text-xs text-muted-foreground">
-                  Got it
-                </span>
+                <span className="text-xs text-muted-foreground">Got it</span>
               </div>
             </motion.button>
 
@@ -77,9 +71,7 @@ export function WordCardRating({ showRating, onRating }: WordCardRatingProps) {
               <div className="flex flex-col items-center gap-2">
                 <span className="text-3xl">😊</span>
                 <span className="text-sm">Easy</span>
-                <span className="text-xs text-muted-foreground">
-                  Know it!
-                </span>
+                <span className="text-xs text-muted-foreground">Know it!</span>
               </div>
             </motion.button>
           </div>

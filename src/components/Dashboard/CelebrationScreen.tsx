@@ -73,8 +73,8 @@ export function CelebrationScreen({
             transition={{ delay: 0.6 }}
             className="text-muted-foreground text-sm mb-6 max-w-md mx-auto"
           >
-            Incredible work! You've completed all your stories and
-            mastered every word.
+            Incredible work! You've completed all your stories and mastered
+            every word.
           </motion.p>
 
           {/* Achievement Stats */}
@@ -117,11 +117,7 @@ export function CelebrationScreen({
               <Plus className="w-4 h-4 mr-2" />
               Add Words
             </Button>
-            <Button
-              onClick={onViewAllStories}
-              variant="outline"
-              size="sm"
-            >
+            <Button onClick={onViewAllStories} variant="outline" size="sm">
               <Library className="w-4 h-4 mr-2" />
               View Stories
             </Button>
@@ -131,4 +127,3 @@ export function CelebrationScreen({
     </motion.div>
   );
 }
-
